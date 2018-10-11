@@ -18,9 +18,9 @@ def _build_route(name, path, parent):
 
     if parent is not None:
         if hasattr(parent, '_parent_name'):
-            route += parent._parent_name + f'/<{parent._parent_name}_id>/'
+            route += parent._parent_name + '/<%s_id>/' % parent._parent_name
 
-        route += parent._resource_name + f'/<{parent._resource_name}_id>/'
+        route += parent._resource_name + '/<%s_id>/' % parent._resource_name
 
     route += name + path.rstrip('/')
 
@@ -44,7 +44,7 @@ def resource(name, parent=None, version=1):
             blueprints = get_blueprints_storage()
 
             if version not in blueprints.keys():
-                bp = Blueprint(str(version), str(version), url_prefix=f'/api/rest/v{version}/')
+                bp = Blueprint(str(version), str(version), url_prefix='/api/rest/v%d/' % version)
 
                 blueprints.set(version, bp)
 
