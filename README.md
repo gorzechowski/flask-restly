@@ -1,9 +1,7 @@
 # Flask-RESTly
 
 [![Build Status](https://travis-ci.org/gorzechowski/flask-restly.svg?branch=master)](https://travis-ci.org/gorzechowski/flask-restly)
-
 [![Latest version](https://img.shields.io/pypi/v/flask-restly.svg)](https://pypi.org/project/flask-restly)
-
 [![Python versions](https://img.shields.io/pypi/pyversions/flask-restly.svg)](https://pypi.org/project/flask-restly)
 
 ## Features
