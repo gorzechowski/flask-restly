@@ -4,7 +4,7 @@ from flask_restly.exception import InternalServerError
 from ._storage import get_blueprints_storage, get_metadata_storage
 
 
-__version__ = "0.1.0"
+__version__ = '0.1.0'
 
 
 def _jsonify_error(error):
