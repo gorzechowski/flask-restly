@@ -10,6 +10,7 @@ setup(
     version='0.1.0',
     description='Build a REST API with Flask',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/gorzechowski/flask-restly',
     author='Gracjan Orzechowski',
     author_email='orzechowski.gracjan@gmail.com',
