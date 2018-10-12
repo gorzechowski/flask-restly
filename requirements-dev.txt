@@ -1,4 +1,4 @@
-Flask==1.0.2
+flask>=1.0
 pytest==3.8.0
 pytest-cov==2.6.0
 tox>=2.0
