@@ -1,6 +1,7 @@
 from flask import request, jsonify, Flask
 from werkzeug.exceptions import HTTPException
 from flask_restly.exception import InternalServerError
+from flask_restly.serializer import json
 from ._storage import get_blueprints_storage, get_metadata_storage
 
 
@@ -49,6 +50,8 @@ class FlaskRestly(object):
             app.extensions = dict()
 
         app.extensions['rest-api'] = self
+
+        app.config.setdefault('RESTLY_DEFAULT_SERIALIZER', json)
 
         if self._error_handler is not None:
             app.register_error_handler(Exception, self._error_handler)

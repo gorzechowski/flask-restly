@@ -1,17 +1,16 @@
 from flask_restly._storage import append_mapping
 from functools import wraps
-from flask import jsonify
 
 
-def post(path):
+def post(path, serializer=None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
+            response = func(*args, **kwargs)
 
-            return ('', 204) if result is None else (jsonify(result), 200)
+            return ('', 204) if response is None else (response, 200)
 
-        append_mapping(wrapper, path, 'POST')
+        append_mapping(wrapper, path, serializer, 'POST')
 
         return wrapper
 

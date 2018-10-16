@@ -3,14 +3,8 @@ from flask import (
     Blueprint,
 )
 from flask_restly._storage import get_blueprints_storage, get_metadata_storage
+from flask_restly._serializer import _serializer_factory
 from functools import wraps
-
-
-def _wrapper_factory(obj, callback):
-    def wrapper(*origin_args, **origin_kwargs):
-        return callback(obj, *origin_args, **origin_kwargs)
-
-    return wrapper
 
 
 def _build_route(name, path, parent):
@@ -54,7 +48,7 @@ def resource(name, parent=None, version=1):
                 blueprints.get(version).add_url_rule(
                     route,
                     value['func'].__name__,
-                    _wrapper_factory(instance, value['func']),
+                    _serializer_factory(instance, value['func'], value['serializer']),
                     methods=value['methods']
                 )
 
