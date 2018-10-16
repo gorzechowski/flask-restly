@@ -8,7 +8,13 @@
 
 * Decorators-based routing
 * Automatic response codes
-* Response jsonify
+* Built-in response serializers with custom serializer support
+
+## Todo
+
+* Protobuf support
+* HATEOAS
+* ...
 
 ## Installation
 
