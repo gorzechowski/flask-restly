@@ -8,13 +8,23 @@
 
 * Decorators-based routing
 * Automatic response codes
-* Response jsonify
+* Built-in response serializers with custom serializer support
+
+## Todo
+
+* Protobuf support
+* HATEOAS
+* ...and few more :)
 
 ## Installation
 
 ```
 pip install flask-restly
 ```
+
+## Usage
+
+Please see [examples](/examples) for more details.
 
 ## Quick start
 
