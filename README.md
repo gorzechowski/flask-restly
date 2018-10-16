@@ -14,7 +14,7 @@
 
 * Protobuf support
 * HATEOAS
-* ...
+* ...and few more :)
 
 ## Installation
 
