@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 (UNRELEASED)
+## 0.2.0 (16.10.2018)
 * Ability to skip `flask-restly`'s serialization when `Response` object is used
 * Custom serializer support
 

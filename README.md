@@ -22,6 +22,10 @@
 pip install flask-restly
 ```
 
+## Usage
+
+Please see [examples](/examples) for more details.
+
 ## Quick start
 
 ```python
