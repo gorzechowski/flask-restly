@@ -42,19 +42,21 @@ def resource(name, parent=None, version=1):
 
                 blueprints.set(version, bp)
 
-            for value in metadata.get(obj.__name__, []):
+            for key, value in metadata.get(obj.__name__, {}).items():
                 route = _build_route(name, value['path'], parent)
 
                 blueprints.get(version).add_url_rule(
                     route,
                     value['func'].__name__,
-                    _serializer_factory(instance, value['func'], value['serializer']),
+                    _serializer_factory(instance, obj, value['func'], value['serializer']),
                     methods=value['methods']
                 )
 
             current_app.register_blueprint(blueprints.get(version))
 
-            metadata.set(obj.__name__, list())
+            metadata.set(obj.__name__, {
+                obj.__name__: {},
+            })
 
             return instance
 

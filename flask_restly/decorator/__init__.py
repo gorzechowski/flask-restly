@@ -1,3 +1,4 @@
+from .body import body
 from .resource import resource
 from .post import post
 from .get import get

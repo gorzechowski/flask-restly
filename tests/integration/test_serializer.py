@@ -57,7 +57,7 @@ def test_should_use_custom_serializer_when_provided():
 
     @resource(name='test')
     class SomeResource:
-        @get('/', serializer=lambda r: r.get('foo'))
+        @get('/', serializer=lambda r, _: r.get('foo'))
         def get(self):
             return dict(foo='bar')
 
@@ -73,7 +73,7 @@ def test_should_use_custom_serializer_when_provided():
 def test_should_use_default_serializer_when_custom_serializer_not_provided():
     app = Flask(__name__)
 
-    app.config['RESTLY_DEFAULT_SERIALIZER'] = lambda r: r.get('foo')
+    app.config['RESTLY_DEFAULT_SERIALIZER'] = lambda r, _: r.get('foo')
 
     FlaskRestly(app)
 
