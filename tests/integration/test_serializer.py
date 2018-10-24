@@ -1,6 +1,8 @@
-from flask_restly.decorator import resource, get
+from flask_restly.decorator import resource, get, body
+from flask_restly.serializer import protobuf
 from flask_restly import FlaskRestly
 from flask import Flask, make_response
+from tests.fixtures.entity_pb2 import Entity
 import pytest
 
 
@@ -10,13 +12,41 @@ import pytest
     (dict(id=1), bytes('{"id":1}', 'utf8')),
     (dict(items=[dict(id=1)]), bytes('{"items":[{"id":1}]}', 'utf8')),
 ])
-def test_should_serialize_given_response(data, expected_data):
+def test_should_serialize_given_response_to_json(data, expected_data):
     app = Flask(__name__)
     FlaskRestly(app)
 
     @resource(name='test')
     class SomeResource:
         @get('/')
+        def get(self):
+            return data
+
+    with app.app_context():
+        SomeResource()
+
+    with app.test_client() as client:
+        response = client.get('/api/rest/v1/test')
+        data = response.get_data().strip(bytes('\n', 'utf8'))
+        assert data == expected_data
+
+
+@pytest.mark.parametrize("data,expected_data", [
+    (dict(), bytes('', 'utf8')),
+    (dict(id=1), bytes('\x08\x01', 'utf8')),
+])
+def test_should_serialize_given_response_to_protobuf(data, expected_data):
+    app = Flask(__name__)
+    api = FlaskRestly()
+
+    app.config['RESTLY_DEFAULT_SERIALIZER'] = protobuf
+
+    api.init_app(app)
+
+    @resource(name='test')
+    class SomeResource:
+        @get('/')
+        @body(Entity)
         def get(self):
             return data
 
