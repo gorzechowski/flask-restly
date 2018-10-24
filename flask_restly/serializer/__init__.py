@@ -1,24 +1,54 @@
-from flask import jsonify, Flask
+from flask import jsonify, current_app
 
 try:
+    from google.protobuf.internal.containers import BaseContainer
     from google.protobuf.reflection import GeneratedProtocolMessageType
+    from google.protobuf.message import Message as ProtocolMessage
 except ImportError:
     pass
 
 
-def json(response, _):
-    return jsonify(response)
+class SerializerBase:
+    def serialize(self, response, outgoing):
+        raise NotImplementedError()
+
+    def deserialize(self, request, incoming):
+        raise NotImplementedError()
 
 
-def protobuf(response, outgoing):
-    assert isinstance(outgoing, GeneratedProtocolMessageType) is True
+class JsonSerializer(SerializerBase):
+    def serialize(self, response, _):
+        return jsonify(response)
 
-    outgoing = _dict_to_protobuf(response, outgoing)
+    def deserialize(self, request, _):
+        return request.get_json()
 
-    return Flask.response_class(
-        outgoing.SerializeToString(),
-        mimetype="application/x-protobuf"
-    )
+
+class ProtobufSerializer(SerializerBase):
+    def serialize(self, response, outgoing):
+        assert isinstance(outgoing, GeneratedProtocolMessageType) is True
+
+        outgoing = _dict_to_protobuf(response, outgoing)
+
+        return current_app.response_class(
+            outgoing.SerializeToString(),
+            mimetype="application/x-protobuf"
+        )
+
+    def deserialize(self, request, incoming):
+        assert isinstance(incoming, GeneratedProtocolMessageType) is True
+
+        incoming = incoming()
+
+        data = request.get_data().strip().decode('unicode-escape')
+
+        incoming.ParseFromString(data.encode('utf-8'))
+
+        return _protobuf_to_dict(incoming)
+
+
+json = JsonSerializer()
+protobuf = ProtobufSerializer()
 
 
 def _dict_to_protobuf(dictionary, outgoing):
@@ -46,3 +76,23 @@ def _dict_to_protobuf(dictionary, outgoing):
             setattr(instance, key, value)
 
     return instance
+
+
+def _protobuf_to_dict(instance):
+    result = dict()
+
+    for descriptor, value in instance.ListFields():
+        if isinstance(value, ProtocolMessage):
+            result[descriptor.name] = _protobuf_to_dict(value)
+        elif isinstance(value, BaseContainer):
+            result[descriptor.name] = []
+            for item in value:
+                if isinstance(item, ProtocolMessage):
+                    dict_item = _protobuf_to_dict(item)
+                    result[descriptor.name].append(dict_item)
+                else:
+                    result[descriptor.name].append(item)
+        else:
+            result[descriptor.name] = value
+
+    return result

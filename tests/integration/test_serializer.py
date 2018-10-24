@@ -1,5 +1,5 @@
 from flask_restly.decorator import resource, get, body
-from flask_restly.serializer import protobuf
+from flask_restly.serializer import protobuf, SerializerBase
 from flask_restly import FlaskRestly
 from flask import Flask, make_response
 from tests.fixtures.entity_pb2 import Entity
@@ -103,7 +103,14 @@ def test_should_use_custom_serializer_when_provided():
 def test_should_use_default_serializer_when_custom_serializer_not_provided():
     app = Flask(__name__)
 
-    app.config['RESTLY_DEFAULT_SERIALIZER'] = lambda r, _: r.get('foo')
+    class SomeSerializer(SerializerBase):
+        def serialize(self, response, _):
+            return response.get('foo')
+
+        def deserialize(self, request, _):
+            pass
+
+    app.config['RESTLY_DEFAULT_SERIALIZER'] = SomeSerializer()
 
     FlaskRestly(app)
 
