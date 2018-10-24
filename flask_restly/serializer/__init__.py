@@ -32,7 +32,7 @@ class ProtobufSerializer(SerializerBase):
 
         return current_app.response_class(
             outgoing.SerializeToString(),
-            mimetype="application/x-protobuf"
+            mimetype=current_app.config.get('RESTLY_PROTOBUF_MIMETYPE')
         )
 
     def deserialize(self, request, incoming):

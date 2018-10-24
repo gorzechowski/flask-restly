@@ -56,6 +56,7 @@ def test_should_serialize_given_response_to_protobuf(data, expected_data):
     with app.test_client() as client:
         response = client.get('/api/rest/v1/test')
         data = response.get_data().strip(bytes('\n', 'utf8'))
+        assert response.headers.get('Content-Type') == 'application/x-protobuf'
         assert data == expected_data
 
 

@@ -53,6 +53,7 @@ class FlaskRestly(object):
 
         app.config.setdefault('RESTLY_SERIALIZER', json)
         app.config.setdefault('RESTLY_API_PREFIX', '/api/rest')
+        app.config.setdefault('RESTLY_PROTOBUF_MIMETYPE', 'application/x-protobuf')
 
         if self._error_handler is not None:
             app.register_error_handler(Exception, self._error_handler)
