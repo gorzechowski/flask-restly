@@ -1,4 +1,4 @@
-from flask import request, jsonify, Flask
+from flask import request, jsonify, Flask, current_app
 from werkzeug.exceptions import HTTPException
 from flask_restly.exception import InternalServerError
 from flask_restly.serializer import json
@@ -18,7 +18,7 @@ def api_error_handler(error):
     :type error:  HTTPException
     :return:
     """
-    if not request.path.startswith('/api'):
+    if not request.path.startswith(current_app.config.get('RESTLY_API_PREFIX')):
         raise error
 
     if isinstance(error, HTTPException):
@@ -51,7 +51,8 @@ class FlaskRestly(object):
 
         app.extensions['rest-api'] = self
 
-        app.config.setdefault('RESTLY_DEFAULT_SERIALIZER', json)
+        app.config.setdefault('RESTLY_SERIALIZER', json)
+        app.config.setdefault('RESTLY_API_PREFIX', '/api/rest')
 
         if self._error_handler is not None:
             app.register_error_handler(Exception, self._error_handler)

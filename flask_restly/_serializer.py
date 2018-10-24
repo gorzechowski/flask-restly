@@ -6,10 +6,12 @@ from flask import (
 from flask_restly._storage import get_metadata_storage
 
 
-def _serializer_factory(instance, obj, callback, serializer):
-    if serializer is None:
-        serializer = current_app.config.get('RESTLY_DEFAULT_SERIALIZER').serialize
-        deserializer = current_app.config.get('RESTLY_DEFAULT_SERIALIZER').deserialize
+def _serializer_factory(instance, obj, callback, serialize):
+    serializer = current_app.config.get('RESTLY_SERIALIZER')
+    deserialize = serializer.deserialize
+
+    if serialize is None:
+        serialize = serializer.serialize
 
     metadata = get_metadata_storage().get(obj.__name__).get(callback.__name__)
     outgoing = metadata.get('outgoing', None)
@@ -17,13 +19,13 @@ def _serializer_factory(instance, obj, callback, serializer):
 
     def wrapper(*args, **kwargs):
         if len(request.get_data()) > 0:
-            kwargs['body'] = deserializer(request, incoming)
+            kwargs['body'] = deserialize(request, incoming)
 
         response, code = callback(instance, *args, **kwargs)
 
         if isinstance(response, Response):
             return response, response.status_code
 
-        return serializer(response, outgoing) if response != '' else response, code
+        return serialize(response, outgoing) if response != '' else response, code
 
     return wrapper

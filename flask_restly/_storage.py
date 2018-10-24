@@ -26,7 +26,7 @@ def get_blueprints_storage():
     return _blueprints
 
 
-def append_mapping(func, path, serializer, method):
+def append_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
@@ -39,7 +39,7 @@ def append_mapping(func, path, serializer, method):
         {
             'func': func,
             'path': path,
-            'serializer': serializer,
+            'serialize': serialize,
             'methods': [method],
         }
     )

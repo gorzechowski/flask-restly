@@ -2,7 +2,7 @@ from flask_restly._storage import append_mapping
 from functools import wraps
 
 
-def put(path, serializer=None):
+def put(path, serialize=None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -18,7 +18,7 @@ def put(path, serializer=None):
 
             return response[0], response[1]
 
-        append_mapping(wrapper, path, serializer, 'PUT')
+        append_mapping(wrapper, path, serialize, 'PUT')
 
         return wrapper
 
