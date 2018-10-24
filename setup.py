@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from setuptools import setup, find_packages
+from io import open
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
