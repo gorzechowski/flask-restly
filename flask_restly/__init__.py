@@ -5,7 +5,7 @@ from flask_restly.serializer import json
 from ._storage import get_blueprints_storage, get_metadata_storage
 
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 def _jsonify_error(error):
