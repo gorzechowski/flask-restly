@@ -51,31 +51,27 @@ json = JsonSerializer()
 protobuf = ProtobufSerializer()
 
 
-def _dict_to_protobuf(dictionary, outgoing):
-    assert outgoing is not None
-    assert isinstance(dictionary, dict)
-
-    instance = outgoing()
-
-    for key, value in dictionary.items():
-        if value is None:
-            continue
-
-        if isinstance(value, dict):
-            attribute = getattr(instance, key)
-            _dict_to_protobuf(attribute, value)
-
-        elif hasattr(value, "__iter__") and not isinstance(value, str):
-            attribute = getattr(instance, key)
-            if len(value) == 0 or not isinstance(value[0], dict):
-                attribute.extend(value)
-            else:
-                for item in value:
-                    _dict_to_protobuf(attribute.add(), item)
+def _dict_to_protobuf(value, message):
+    def _parse_list(values, message):
+        if len(values) > 0 and isinstance(values[0], dict):
+            for v in values:
+                cmd = message.add()
+                _parse_dict(v, cmd)
         else:
-            setattr(instance, key, value)
+            message.extend(values)
 
-    return instance
+    def _parse_dict(values, message):
+        for k, v in values.items():
+            if isinstance(v, dict):
+                _parse_dict(v, getattr(message, k))
+            elif isinstance(v, list):
+                _parse_list(v, getattr(message, k))
+            else:
+                setattr(message, k, v)
+
+        return message
+
+    return _parse_dict(value, message())
 
 
 def _protobuf_to_dict(instance):
