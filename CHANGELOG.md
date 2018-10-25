@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 (UNRELEASED)
+## 0.4.0 (26.10.2018)
 * Authorization decorators
 
 ## 0.3.1 (25.10.2018)
