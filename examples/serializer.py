@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # json is default serializer
 # from flask_restly.serializer import json
-# app.config['RESTLY_DEFAULT_SERIALIZER'] = json
+# app.config['RESTLY_SERIALIZER'] = json
 
 rest = FlaskRestly(app)
 rest.init_app(app)
@@ -15,7 +15,7 @@ rest.init_app(app)
 
 @resource(name='employees')
 class EmployeesResource:
-    @get('/<id>', serializer=lambda result: str(result.get('id')))
+    @get('/<id>', serialize=lambda result, _: str(result.get('id')))
     def get_employee(self, id):
         return dict(id=int(id))
 

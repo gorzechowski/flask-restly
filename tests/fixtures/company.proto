@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message Employee {
+    int32 id = 1;
+    string name = 2;
+
+    enum Position {
+        DEVELOPER = 0;
+        CTO = 1;
+        CEO = 2;
+    }
+
+    Position position = 3;
+
+    bool isActive = 4;
+}
+
+message Company {
+    int32 id = 1;
+
+    repeated Employee employees = 2;
+
+    message Address {
+        string country = 1;
+    }
+
+    Address address = 3;
+}

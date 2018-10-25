@@ -26,14 +26,40 @@ def get_blueprints_storage():
     return _blueprints
 
 
-def append_mapping(func, path, serializer, method):
+def append_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
     if not any(parent_name == key for key in metadata.keys()):
-        metadata.set(parent_name, list())
+        metadata.set(parent_name, {
+            func.__name__: {},
+        })
 
-    metadata.get(parent_name).append(dict(func=func, path=path, serializer=serializer, methods=[method]))
+    metadata.get(parent_name).get(func.__name__, {}).update(
+        {
+            'func': func,
+            'path': path,
+            'serialize': serialize,
+            'methods': [method],
+        }
+    )
+
+
+def append_body_types(func, incoming, outgoing):
+    parent_name = _get_func_parent_name(func)
+    metadata = get_metadata_storage()
+
+    if not any(parent_name == key for key in metadata.keys()):
+        metadata.set(parent_name, {
+            func.__name__: {},
+        })
+
+    metadata.get(parent_name).get(func.__name__, {}).update(
+        {
+            'incoming': incoming,
+            'outgoing': outgoing,
+        }
+    )
 
 
 def _get_func_parent_name(func):

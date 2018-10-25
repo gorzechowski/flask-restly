@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 (25.10.2018)
+* Protobuf support
+* Request body JSON and Protobuf deserialization
+* Customizable api prefix
+
 ## 0.2.0 (16.10.2018)
 * Ability to skip `flask-restly`'s serialization when `Response` object is used
 * Custom serializer support

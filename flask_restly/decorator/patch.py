@@ -2,7 +2,7 @@ from flask_restly._storage import append_mapping
 from functools import wraps
 
 
-def patch(path, serializer=None):
+def patch(path, serialize=None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -10,7 +10,7 @@ def patch(path, serializer=None):
 
             return ('', 204) if response is None else (response, 200)
 
-        append_mapping(wrapper, path, serializer, 'PATCH')
+        append_mapping(wrapper, path, serialize, 'PATCH')
 
         return wrapper
 

@@ -36,25 +36,28 @@ def resource(name, parent=None, version=1):
 
             metadata = get_metadata_storage()
             blueprints = get_blueprints_storage()
+            api_prefix = current_app.config.get('RESTLY_API_PREFIX').strip('/')
 
             if version not in blueprints.keys():
-                bp = Blueprint(str(version), str(version), url_prefix='/api/rest/v%d/' % version)
+                bp = Blueprint(str(version), str(version), url_prefix='/%s/v%d/' % (api_prefix, version))
 
                 blueprints.set(version, bp)
 
-            for value in metadata.get(obj.__name__, []):
+            for key, value in metadata.get(obj.__name__, {}).items():
                 route = _build_route(name, value['path'], parent)
 
                 blueprints.get(version).add_url_rule(
                     route,
                     value['func'].__name__,
-                    _serializer_factory(instance, value['func'], value['serializer']),
+                    _serializer_factory(instance, obj, value['func'], value['serialize']),
                     methods=value['methods']
                 )
 
             current_app.register_blueprint(blueprints.get(version))
 
-            metadata.set(obj.__name__, list())
+            metadata.set(obj.__name__, {
+                obj.__name__: {},
+            })
 
             return instance
 
