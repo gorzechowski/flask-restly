@@ -4,9 +4,10 @@ from flask import (
     request,
 )
 from flask_restly._storage import get_metadata_storage
+from flask_restly.exception import Forbidden
 
 
-def _serializer_factory(instance, obj, callback, serialize):
+def _view_factory(instance, obj, callback, serialize):
     serializer = current_app.config.get('RESTLY_SERIALIZER')
     deserialize = serializer.deserialize
 
@@ -16,8 +17,12 @@ def _serializer_factory(instance, obj, callback, serialize):
     metadata = get_metadata_storage().get(obj.__name__).get(callback.__name__)
     outgoing = metadata.get('outgoing', None)
     incoming = metadata.get('incoming', None)
+    skip_auth = metadata.get('skip_authorization', False)
 
     def wrapper(*args, **kwargs):
+        if not skip_auth and get_metadata_storage().get('auth_provider', lambda: True)() is False:
+            raise Forbidden()
+
         if len(request.get_data()) > 0:
             kwargs['body'] = deserialize(request, incoming)
 
