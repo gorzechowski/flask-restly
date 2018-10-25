@@ -1,5 +1,5 @@
 from functools import wraps
-from flask_restly._storage import append_skip_authorization, get_metadata_storage
+from flask_restly._storage import push_skip_authorization, get_metadata_storage
 
 
 def unauthorized(func):
@@ -7,7 +7,7 @@ def unauthorized(func):
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
-    append_skip_authorization(wrapper)
+    push_skip_authorization(wrapper)
 
     return wrapper
 

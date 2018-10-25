@@ -1,4 +1,4 @@
-from flask_restly._storage import append_mapping
+from flask_restly._storage import push_mapping
 from functools import wraps
 
 
@@ -18,7 +18,7 @@ def put(path, serialize=None):
 
             return response[0], response[1]
 
-        append_mapping(wrapper, path, serialize, 'PUT')
+        push_mapping(wrapper, path, serialize, 'PUT')
 
         return wrapper
 

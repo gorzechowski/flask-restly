@@ -26,7 +26,7 @@ def get_blueprints_storage():
     return _blueprints
 
 
-def append_mapping(func, path, serialize, method):
+def push_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
@@ -49,7 +49,7 @@ def append_mapping(func, path, serialize, method):
     metadata.get(parent_name)[func.__name__] = data
 
 
-def append_body_types(func, incoming, outgoing):
+def push_body_types(func, incoming, outgoing):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
@@ -70,7 +70,7 @@ def append_body_types(func, incoming, outgoing):
     metadata.get(parent_name)[func.__name__] = data
 
 
-def append_skip_authorization(func):
+def push_skip_authorization(func):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
