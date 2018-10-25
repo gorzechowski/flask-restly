@@ -65,7 +65,7 @@ def _dict_to_protobuf(dictionary, outgoing):
             attribute = getattr(instance, key)
             _dict_to_protobuf(attribute, value)
 
-        elif hasattr(value, "__iter__"):
+        elif hasattr(value, "__iter__") and not isinstance(value, str):
             attribute = getattr(instance, key)
             if len(value) == 0 or not isinstance(value[0], dict):
                 attribute.extend(value)
