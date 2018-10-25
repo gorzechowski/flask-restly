@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restly import FlaskRestly
-from flask_restly.decorator import resource, get, delete, auth
+from flask_restly.decorator import resource, get, auth
 
 
 app = Flask(__name__)
@@ -27,10 +27,6 @@ class EmployeesResource:
             dict(id=1),
             dict(id=2)
         ])
-
-    @delete('/<id>')
-    def delete_employee(self, **kwargs):
-        return
 
 
 with app.app_context():
