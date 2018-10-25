@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1 (25.10.2018)
+* Fixed routing
+
 ## 0.3.0 (25.10.2018)
 * Protobuf support
 * Request body JSON and Protobuf deserialization

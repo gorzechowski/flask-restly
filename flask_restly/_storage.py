@@ -35,7 +35,9 @@ def append_mapping(func, path, serialize, method):
             func.__name__: {},
         })
 
-    metadata.get(parent_name).get(func.__name__, {}).update(
+    data = metadata.get(parent_name).get(func.__name__, {}).copy()
+
+    data.update(
         {
             'func': func,
             'path': path,
@@ -43,6 +45,8 @@ def append_mapping(func, path, serialize, method):
             'methods': [method],
         }
     )
+
+    metadata.get(parent_name)[func.__name__] = data
 
 
 def append_body_types(func, incoming, outgoing):
@@ -54,12 +58,16 @@ def append_body_types(func, incoming, outgoing):
             func.__name__: {},
         })
 
-    metadata.get(parent_name).get(func.__name__, {}).update(
+    data = metadata.get(parent_name).get(func.__name__, {}).copy()
+
+    data.update(
         {
             'incoming': incoming,
             'outgoing': outgoing,
         }
     )
+
+    metadata.get(parent_name)[func.__name__] = data
 
 
 def _get_func_parent_name(func):
