@@ -16,17 +16,11 @@
 * HATEOAS
 * ...and few more :)
 
-## Installation
+## Quick start
 
 ```
 pip install flask-restly
 ```
-
-## Usage
-
-Please see [examples](/examples) for more details.
-
-## Quick start
 
 By default `flask-restly` uses JSON serializer.
 
@@ -79,6 +73,10 @@ $ python main.py
 * Debugger PIN: 210-167-642
 * Running on http://127.0.0.1:5001/ (Press CTRL+C to quit)
 ```
+
+## Usage
+
+Please see [examples](/examples) for more details.
 
 ## Protobuf
 

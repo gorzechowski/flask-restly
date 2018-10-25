@@ -2,7 +2,7 @@
 
 ## 0.3.0 (UNRELEASED)
 * Protobuf support
-* Request body deserialization
+* Request body JSON and Protobuf deserialization
 * Customizable api prefix
 
 ## 0.2.0 (16.10.2018)
