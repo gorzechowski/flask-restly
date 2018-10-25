@@ -5,23 +5,6 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/flask-restly.svg)](https://pypi.org/project/flask-restly)
 [![Coverage Status](https://coveralls.io/repos/github/gorzechowski/flask-restly/badge.svg?branch=master)](https://coveralls.io/github/gorzechowski/flask-restly?branch=master)
 
-## Features
-
-* Decorators-based routing
-* JSON and Protobuf built-in serialization
-* Custom serializer support
-* Authorization decorators
-* Automatic REST-like response codes
-
-## Todo
-
-* HATEOAS
-* ...and few more :)
-
-## Usage
-
-Please see [docs](/docs) and [examples](/examples) for more details.
-
 ## Quick start
 
 ```
@@ -79,3 +62,26 @@ $ python main.py
 * Debugger PIN: 210-167-642
 * Running on http://127.0.0.1:5001/ (Press CTRL+C to quit)
 ```
+
+## Features
+
+* Decorators-based routing
+* JSON and Protobuf built-in serialization
+* Custom serializer support
+* Authorization decorators
+* Automatic REST-like response codes
+
+## Todo
+
+* HATEOAS
+* Commands
+* ...and few more :)
+
+## Usage
+
+Please see [examples](/examples) for more details.
+
+## Docs
+
+* [Authorization](/docs/Authorization.md)
+* [Protobuf](/docs/Protobuf.md)
