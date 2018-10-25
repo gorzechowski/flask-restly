@@ -10,6 +10,7 @@
 * Decorators-based routing
 * JSON and Protobuf built-in serialization
 * Custom serializer support
+* Authorization decorators
 * Automatic REST-like response codes
 
 ## Todo

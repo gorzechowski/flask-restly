@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0 (UNRELEASED)
+* Authorization decorators
+
 ## 0.3.1 (25.10.2018)
 * Fixed routing
 
