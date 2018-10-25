@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rcompany.proto\"\x89\x01\n\x08\x45mployee\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12$\n\x08position\x18\x03 \x01(\x0e\x32\x12.Employee.Position\x12\x10\n\x08isActive\x18\x04 \x01(\x08\"+\n\x08Position\x12\r\n\tDEVELOPER\x10\x00\x12\x07\n\x03\x43TO\x10\x01\x12\x07\n\x03\x43\x45O\x10\x02\"3\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x1c\n\temployees\x18\x02 \x03(\x0b\x32\t.Employeeb\x06proto3')
+  serialized_pb=_b('\n\rcompany.proto\"\x89\x01\n\x08\x45mployee\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12$\n\x08position\x18\x03 \x01(\x0e\x32\x12.Employee.Position\x12\x10\n\x08isActive\x18\x04 \x01(\x08\"+\n\x08Position\x12\r\n\tDEVELOPER\x10\x00\x12\x07\n\x03\x43TO\x10\x01\x12\x07\n\x03\x43\x45O\x10\x02\"r\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x1c\n\temployees\x18\x02 \x03(\x0b\x32\t.Employee\x12!\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x10.Company.Address\x1a\x1a\n\x07\x41\x64\x64ress\x12\x0f\n\x07\x63ountry\x18\x01 \x01(\tb\x06proto3')
 )
 
 
@@ -104,6 +104,36 @@ _EMPLOYEE = _descriptor.Descriptor(
 )
 
 
+_COMPANY_ADDRESS = _descriptor.Descriptor(
+  name='Address',
+  full_name='Company.Address',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='country', full_name='Company.Address.country', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=245,
+  serialized_end=271,
+)
+
 _COMPANY = _descriptor.Descriptor(
   name='Company',
   full_name='Company',
@@ -125,10 +155,17 @@ _COMPANY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='address', full_name='Company.address', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_COMPANY_ADDRESS, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -138,12 +175,14 @@ _COMPANY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=157,
-  serialized_end=208,
+  serialized_end=271,
 )
 
 _EMPLOYEE.fields_by_name['position'].enum_type = _EMPLOYEE_POSITION
 _EMPLOYEE_POSITION.containing_type = _EMPLOYEE
+_COMPANY_ADDRESS.containing_type = _COMPANY
 _COMPANY.fields_by_name['employees'].message_type = _EMPLOYEE
+_COMPANY.fields_by_name['address'].message_type = _COMPANY_ADDRESS
 DESCRIPTOR.message_types_by_name['Employee'] = _EMPLOYEE
 DESCRIPTOR.message_types_by_name['Company'] = _COMPANY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -156,11 +195,19 @@ Employee = _reflection.GeneratedProtocolMessageType('Employee', (_message.Messag
 _sym_db.RegisterMessage(Employee)
 
 Company = _reflection.GeneratedProtocolMessageType('Company', (_message.Message,), dict(
+
+  Address = _reflection.GeneratedProtocolMessageType('Address', (_message.Message,), dict(
+    DESCRIPTOR = _COMPANY_ADDRESS,
+    __module__ = 'company_pb2'
+    # @@protoc_insertion_point(class_scope:Company.Address)
+    ))
+  ,
   DESCRIPTOR = _COMPANY,
   __module__ = 'company_pb2'
   # @@protoc_insertion_point(class_scope:Company)
   ))
 _sym_db.RegisterMessage(Company)
+_sym_db.RegisterMessage(Company.Address)
 
 
 # @@protoc_insertion_point(module_scope)

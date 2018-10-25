@@ -1,9 +1,9 @@
 from flask import jsonify, current_app
 
 try:
-    from google.protobuf.internal.containers import BaseContainer
     from google.protobuf.reflection import GeneratedProtocolMessageType
     from google.protobuf.message import Message as ProtocolMessage
+    from google.protobuf.descriptor import FieldDescriptor
 except ImportError:
     pass
 
@@ -78,9 +78,7 @@ def _protobuf_to_dict(instance):
     result = dict()
 
     for descriptor, value in instance.ListFields():
-        if isinstance(value, ProtocolMessage):
-            result[descriptor.name] = _protobuf_to_dict(value)
-        elif isinstance(value, BaseContainer):
+        if descriptor.label == FieldDescriptor.LABEL_REPEATED:
             result[descriptor.name] = []
             for item in value:
                 if isinstance(item, ProtocolMessage):
@@ -88,6 +86,8 @@ def _protobuf_to_dict(instance):
                     result[descriptor.name].append(dict_item)
                 else:
                     result[descriptor.name].append(item)
+        elif descriptor.type == FieldDescriptor.TYPE_MESSAGE:
+            result[descriptor.name] = _protobuf_to_dict(value)
         else:
             result[descriptor.name] = value
 

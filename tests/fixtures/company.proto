@@ -19,4 +19,10 @@ message Company {
     int32 id = 1;
 
     repeated Employee employees = 2;
+
+    message Address {
+        string country = 1;
+    }
+
+    Address address = 3;
 }
