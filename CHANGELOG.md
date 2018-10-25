@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (UNRELEASED)
+## 0.3.0 (25.10.2018)
 * Protobuf support
 * Request body JSON and Protobuf deserialization
 * Customizable api prefix

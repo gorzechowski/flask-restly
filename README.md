@@ -16,6 +16,10 @@
 * HATEOAS
 * ...and few more :)
 
+## Usage
+
+Please see [examples](/examples) for more details.
+
 ## Quick start
 
 ```
@@ -74,10 +78,6 @@ $ python main.py
 * Running on http://127.0.0.1:5001/ (Press CTRL+C to quit)
 ```
 
-## Usage
-
-Please see [examples](/examples) for more details.
-
 ## Protobuf
 
 ```
@@ -126,6 +126,4 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5001, debug=True)
-
-
 ```
