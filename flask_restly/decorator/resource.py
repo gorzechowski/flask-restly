@@ -3,7 +3,7 @@ from flask import (
     Blueprint,
 )
 from flask_restly._storage import get_blueprints_storage, get_metadata_storage
-from flask_restly._serializer import _serializer_factory
+from flask_restly._view import _view_factory
 from functools import wraps
 
 
@@ -49,7 +49,7 @@ def resource(name, parent=None, version=1):
                 blueprints.get(version).add_url_rule(
                     route,
                     value['func'].__name__,
-                    _serializer_factory(instance, obj, value['func'], value['serialize']),
+                    _view_factory(instance, obj, value['func'], value['serialize']),
                     methods=value['methods']
                 )
 

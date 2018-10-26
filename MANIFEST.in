@@ -1,1 +1,3 @@
 include CHANGELOG.md README.md LICENSE
+recursive-include examples *
+recursive-include docs *

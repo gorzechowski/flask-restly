@@ -26,7 +26,7 @@ def get_blueprints_storage():
     return _blueprints
 
 
-def append_mapping(func, path, serialize, method):
+def push_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
@@ -49,7 +49,7 @@ def append_mapping(func, path, serialize, method):
     metadata.get(parent_name)[func.__name__] = data
 
 
-def append_body_types(func, incoming, outgoing):
+def push_body_types(func, incoming, outgoing):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
@@ -64,6 +64,26 @@ def append_body_types(func, incoming, outgoing):
         {
             'incoming': incoming,
             'outgoing': outgoing,
+        }
+    )
+
+    metadata.get(parent_name)[func.__name__] = data
+
+
+def push_skip_authorization(func):
+    parent_name = _get_func_parent_name(func)
+    metadata = get_metadata_storage()
+
+    if not any(parent_name == key for key in metadata.keys()):
+        metadata.set(parent_name, {
+            func.__name__: {},
+        })
+
+    data = metadata.get(parent_name).get(func.__name__, {}).copy()
+
+    data.update(
+        {
+            'skip_authorization': True,
         }
     )
 

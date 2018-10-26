@@ -1,4 +1,4 @@
-from flask_restly._storage import append_mapping
+from flask_restly._storage import push_mapping
 from functools import wraps
 
 
@@ -10,7 +10,7 @@ def delete(path, queued=False, serialize=None):
 
             return ('', 204) if result is None else (result, 200 if not queued else 202)
 
-        append_mapping(wrapper, path, serialize, 'DELETE')
+        push_mapping(wrapper, path, serialize, 'DELETE')
 
         return wrapper
 
