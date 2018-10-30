@@ -90,6 +90,26 @@ def push_skip_authorization(func):
     metadata.get(parent_name)[func.__name__] = data
 
 
+def push_queued(func):
+    parent_name = _get_func_parent_name(func)
+    metadata = get_metadata_storage()
+
+    if not any(parent_name == key for key in metadata.keys()):
+        metadata.set(parent_name, {
+            func.__name__: {},
+        })
+
+    data = metadata.get(parent_name).get(func.__name__, {}).copy()
+
+    data.update(
+        {
+            'queued': True,
+        }
+    )
+
+    metadata.get(parent_name)[func.__name__] = data
+
+
 def _get_func_parent_name(func):
     parts = func.__qualname__.split('.')
     return parts[len(parts) - 2]

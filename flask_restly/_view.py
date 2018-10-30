@@ -18,6 +18,7 @@ def _view_factory(instance, obj, callback, serialize):
     outgoing = metadata.get('outgoing', None)
     incoming = metadata.get('incoming', None)
     skip_auth = metadata.get('skip_authorization', False)
+    queued = metadata.get('queued', False)
 
     def wrapper(*args, **kwargs):
         if not skip_auth and get_metadata_storage().get('auth_provider', lambda: True)() is False:
@@ -31,6 +32,6 @@ def _view_factory(instance, obj, callback, serialize):
         if isinstance(response, Response):
             return response, response.status_code
 
-        return serialize(response, outgoing) if response != '' else response, code
+        return serialize(response, outgoing) if response != '' else response, code if not queued else 202
 
     return wrapper
