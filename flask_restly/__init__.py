@@ -5,7 +5,7 @@ from flask_restly.serializer import json
 from ._storage import get_blueprints_storage, get_metadata_storage
 
 
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 
 
 def _jsonify_error(error):
@@ -23,6 +23,8 @@ def api_error_handler(error):
 
     if isinstance(error, HTTPException):
         return _jsonify_error(error), error.code
+
+    current_app.logger.error(error)
 
     return _jsonify_error(InternalServerError()), 500
 

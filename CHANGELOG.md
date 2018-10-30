@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 (30.10.2018)
+* `@queued` decorator added
+* BREAK: removed `queued` flag in `@delete` decorator, `@queued` should be used instead 
+
 ## 0.4.0 (26.10.2018)
 * Authorization decorators
 

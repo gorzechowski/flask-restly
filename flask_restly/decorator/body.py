@@ -1,4 +1,4 @@
-from flask_restly._storage import push_body_types
+from flask_restly._storage import push_metadata
 from functools import wraps
 
 
@@ -8,7 +8,10 @@ def body(outgoing=None, incoming=None):
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
 
-        push_body_types(wrapper, incoming, outgoing)
+        push_metadata(wrapper, {
+            'incoming': incoming,
+            'outgoing': outgoing,
+        })
 
         return wrapper
 
