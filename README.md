@@ -70,11 +70,13 @@ $ python main.py
 * Custom serializer support
 * Authorization decorators
 * Automatic REST-like response codes
+* API versioning
 
 ## Todo
 
 * HATEOAS
-* Commands
+* Compression support
+* Caching helpers
 * ...and few more :)
 
 ## Usage

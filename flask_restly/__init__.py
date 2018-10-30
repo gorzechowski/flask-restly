@@ -24,6 +24,8 @@ def api_error_handler(error):
     if isinstance(error, HTTPException):
         return _jsonify_error(error), error.code
 
+    current_app.logger.error(error)
+
     return _jsonify_error(InternalServerError()), 500
 
 
