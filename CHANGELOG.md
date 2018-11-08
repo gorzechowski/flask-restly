@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.1 (08.11.2018)
+* Fix: removed limitation regarding same method names between resources
+
 ## 0.5.0 (30.10.2018)
 * `@queued` decorator added
 * BREAK: removed `queued` flag in `@delete` decorator, `@queued` should be used instead 
