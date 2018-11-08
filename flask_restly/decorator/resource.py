@@ -48,7 +48,7 @@ def resource(name, parent=None, version=1):
 
                 blueprints.get(version).add_url_rule(
                     route,
-                    value['func'].__name__,
+                    '%s:%s' % (obj.__name__, value['func'].__name__),
                     _view_factory(instance, obj, value['func'], value['serialize']),
                     methods=value['methods']
                 )
