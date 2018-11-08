@@ -22,6 +22,96 @@ def test_should_register_resource():
         assert response.get_json() == {}
 
 
+def test_should_register_resources_with_same_method_names():
+    app = Flask(__name__)
+    FlaskRestly(app)
+
+    @resource(name='test')
+    class SomeResource:
+        @get('/')
+        def get(self):
+            return dict()
+
+    @resource(name='test2')
+    class SomeResource2:
+        @get('/')
+        def get(self):
+            return dict()
+
+    with app.app_context():
+        SomeResource()
+        SomeResource2()
+
+    with app.test_client() as client:
+        response = client.get('/api/rest/v1/test')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+        response = client.get('/api/rest/v1/test2')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+
+def test_should_register_resource_with_subresource_with_same_method_names():
+    app = Flask(__name__)
+    FlaskRestly(app)
+
+    @resource(name='parent')
+    class SomeResource:
+        @get('/')
+        def get(self):
+            return dict()
+
+    @resource(name='child', parent=SomeResource)
+    class SomeResource2:
+        @get('/')
+        def get(self, **kwargs):
+            return dict()
+
+    with app.app_context():
+        SomeResource()
+        SomeResource2()
+
+    with app.test_client() as client:
+        response = client.get('/api/rest/v1/parent')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+        response = client.get('/api/rest/v1/parent/1/child')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+
+def test_should_register_different_api_version_resources_with_same_method_names():
+    app = Flask(__name__)
+    FlaskRestly(app)
+
+    @resource(name='test')
+    class SomeResource:
+        @get('/')
+        def get(self):
+            return dict()
+
+    @resource(name='test', version=2)
+    class SomeResource2:
+        @get('/')
+        def get(self):
+            return dict()
+
+    with app.app_context():
+        SomeResource()
+        SomeResource2()
+
+    with app.test_client() as client:
+        response = client.get('/api/rest/v1/test')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+        response = client.get('/api/rest/v2/test')
+        assert response.status_code == 200
+        assert response.get_json() == {}
+
+
 def test_should_register_subresource():
     app = Flask(__name__)
     FlaskRestly(app)
