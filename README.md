@@ -74,8 +74,8 @@ $ python main.py
 
 ## Todo
 
+* Identity support (authentication)
 * HATEOAS
-* Compression support
 * Caching helpers
 * ...and few more :)
 
