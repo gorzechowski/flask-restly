@@ -1,14 +1,15 @@
 from flask_restly._storage import push_metadata
-from functools import wraps
+import wrapt
 
 
 def queued(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
+    @wrapt.decorator
+    def wrapper(wrapped, _, args, kwargs):
+        return wrapped(*args, **kwargs)
 
-    push_metadata(wrapper, {
+    wrapped_func = wrapper(func)
+    push_metadata(wrapped_func, {
         'queued': True,
     })
 
-    return wrapper
+    return wrapped_func

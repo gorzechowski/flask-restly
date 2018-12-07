@@ -1,18 +1,19 @@
 from flask_restly._storage import push_metadata
-from functools import wraps
+import wrapt
 
 
 def body(outgoing=None, incoming=None):
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            return func(*args, **kwargs)
+        @wrapt.decorator
+        def wrapper(wrapped, _, args, kwargs):
+            return wrapped(*args, **kwargs)
 
-        push_metadata(wrapper, {
+        wrapped_func = wrapper(func)
+        push_metadata(wrapped_func, {
             'incoming': incoming,
             'outgoing': outgoing,
         })
 
-        return wrapper
+        return wrapped_func
 
     return decorator

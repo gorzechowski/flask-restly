@@ -4,3 +4,4 @@ pytest-cov==2.6.0
 tox>=2.0
 bumpversion>=0.5
 protobuf>=3.6
+wrapt>=1.0
