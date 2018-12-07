@@ -1,3 +1,6 @@
+import inspect
+
+
 class KeyValueStorage:
     _storage = {}
 
@@ -29,6 +32,11 @@ def get_blueprints_storage():
 def push_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
+
+    if _has_identity_arg(func):
+        push_metadata(func, {
+            'inject_identity': True,
+        })
 
     if not any(parent_name == key for key in metadata.keys()):
         metadata.set(parent_name, {
@@ -68,3 +76,9 @@ def push_metadata(func, new_data):
 def _get_func_parent_name(func):
     parts = func.__qualname__.split('.')
     return parts[len(parts) - 2]
+
+
+def _has_identity_arg(func):
+    inspection = inspect.getfullargspec(func)
+
+    return any(arg == 'identity' for arg in inspection.args)
