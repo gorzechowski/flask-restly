@@ -83,7 +83,15 @@ $ python main.py
 
 Please see [examples](/examples) for more details.
 
-## Docs
+### Settings
+
+| Name                                                          | Default value                |
+| -----------------------------------------------------------:  | :--------------------------- |
+| RESTLY_SERIALIZER: `<flask_restly.serializer.SerializerBase>` | flask_restly.serializer.json |
+| RESTLY_API_PREFIX: `<str>`                                    | /api/rest                    |
+| RESTLY_PROTOBUF_MIMETYPE: `<str>`                             | application/x-protobuf       |
+
+### Docs
 
 * [Authorization](/docs/Authorization.md)
 * [Protobuf](/docs/Protobuf.md)
