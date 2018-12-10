@@ -68,7 +68,7 @@ $ python main.py
 * Decorators-based routing
 * JSON and Protobuf built-in serialization
 * Custom serializer support
-* Authorization decorators
+* Authorization and authentication decorators
 * Automatic REST-like response codes
 * API versioning
 
