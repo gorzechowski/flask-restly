@@ -33,9 +33,14 @@ def push_mapping(func, path, serialize, method):
     parent_name = _get_func_parent_name(func)
     metadata = get_metadata_storage()
 
-    if _has_identity_arg(func):
+    if _has_arg_declared(func, 'identity'):
         push_metadata(func, {
             'inject_identity': True,
+        })
+
+    if _has_arg_declared(func, 'body'):
+        push_metadata(func, {
+            'inject_body': True,
         })
 
     if not any(parent_name == key for key in metadata.keys()):
@@ -78,7 +83,7 @@ def _get_func_parent_name(func):
     return parts[len(parts) - 2]
 
 
-def _has_identity_arg(func):
+def _has_arg_declared(func, arg_name):
     inspection = inspect.getfullargspec(func)
 
-    return any(arg == 'identity' for arg in inspection.args)
+    return any(arg == arg_name for arg in inspection.args)

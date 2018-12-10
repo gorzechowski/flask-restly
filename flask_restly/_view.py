@@ -19,6 +19,7 @@ def _view_factory(instance, obj, callback, serialize):
     incoming = metadata.get('incoming', None)
     skip_auth = metadata.get('skip_authorization', False)
     inject_identity = metadata.get('inject_identity', False)
+    inject_body = metadata.get('inject_body', False)
     queued = metadata.get('queued', False)
 
     def wrapper(*args, **kwargs):
@@ -30,7 +31,7 @@ def _view_factory(instance, obj, callback, serialize):
         if inject_identity and identity_provider is not None:
             kwargs['identity'] = identity_provider()
 
-        if len(request.get_data()) > 0:
+        if inject_body and len(request.get_data()) > 0:
             kwargs['body'] = deserialize(request, incoming)
 
         response, code = callback(instance, *args, **kwargs)
