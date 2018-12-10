@@ -1,5 +1,16 @@
 from flask_restly.decorator import resource, get
-from flask_restly.exception import InternalServerError, BadRequest, Conflict, NotFound
+from flask_restly.exception import (
+    InternalServerError,
+    BadRequest,
+    Conflict,
+    NotFound,
+    NotImplemented,
+    NotAcceptable,
+    UnprocessableEntity,
+    Unauthorized,
+    TooManyRequests,
+    Forbidden,
+)
 from flask_restly import FlaskRestly
 from flask import Flask
 import pytest
@@ -11,6 +22,12 @@ import pytest
     (BadRequest(), 400, BadRequest.description),
     (Conflict(), 409, Conflict.description),
     (NotFound(), 404, NotFound.description),
+    (NotImplemented(), 501, NotImplemented.description),
+    (NotAcceptable(), 406, NotAcceptable.description),
+    (UnprocessableEntity(), 422, UnprocessableEntity.description),
+    (Unauthorized(), 401, Unauthorized.description),
+    (TooManyRequests(), 429, TooManyRequests.description),
+    (Forbidden(), 403, Forbidden.description),
 ])
 def test_should_return_json_when_http_error_raised(error, expected_error_code, expected_message):
     app = Flask(__name__)
