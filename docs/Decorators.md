@@ -1,4 +1,6 @@
-# Queued
+# Decorators
+
+## Queued
 
 In some cases You may need to do some job in the background. `@queued` decorator will change response code to 202 - Accepted. This informs API client that request job is done asynchronously.
 

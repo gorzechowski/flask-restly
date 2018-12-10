@@ -74,8 +74,8 @@ $ python main.py
 
 ## Todo
 
-* Identity support (authentication)
 * HATEOAS
+* Rate limits support
 * Caching helpers
 * ...and few more :)
 
@@ -93,6 +93,8 @@ Please see [examples](/examples) for more details.
 
 ### Docs
 
+* [Authentication](/docs/Authentication.md)
 * [Authorization](/docs/Authorization.md)
+* [Decorators](/docs/Decorators.md)
+* [Exceptions](/docs/Exceptions.md)
 * [Protobuf](/docs/Protobuf.md)
-* [Queued](/docs/Queued.md)
