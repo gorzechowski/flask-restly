@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 (10.12.2018)
+* Identity support (authentication)
+* Added few missing exceptions: NotAcceptable, NotImplemented, TooManyRequests, Unauthorized, UnprocessableEntity
+* Fix: Inject body keyword argument to view function only if declared and available in request
+
 ## 0.5.1 (08.11.2018)
 * Fix: removed limitation regarding same method names between resources
 

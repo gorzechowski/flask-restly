@@ -21,12 +21,12 @@ def _view_factory(instance, obj, callback, serialize):
     inject_identity = metadata.get('inject_identity', False)
     inject_body = metadata.get('inject_body', False)
     queued = metadata.get('queued', False)
+    auth_provider = get_metadata_storage().get('auth_provider', lambda: True)
+    identity_provider = get_metadata_storage().get('identity_provider', None)
 
     def wrapper(*args, **kwargs):
-        if not skip_auth and get_metadata_storage().get('auth_provider', lambda: True)() is False:
+        if not skip_auth and auth_provider() is False:
             raise Forbidden()
-
-        identity_provider = get_metadata_storage().get('identity_provider', None)
 
         if inject_identity and identity_provider is not None:
             kwargs['identity'] = identity_provider()
