@@ -1,24 +1,26 @@
-from functools import wraps
 from flask_restly._storage import push_metadata, get_metadata_storage
+import wrapt
 
 
 def unauthorized(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
+    @wrapt.decorator
+    def wrapper(wrapped, _, args, kwargs):
+        return wrapped(*args, **kwargs)
 
-    push_metadata(wrapper, {
+    wrapped_func = wrapper(func)
+    push_metadata(wrapped_func, {
         'skip_authorization': True,
     })
 
-    return wrapper
+    return wrapped_func
 
 
 def provider(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
+    @wrapt.decorator
+    def wrapper(wrapped, _, args, kwargs):
+        return wrapped(*args, **kwargs)
 
-    get_metadata_storage().set('auth_provider', wrapper)
+    wrapped_func = wrapper(func)
+    get_metadata_storage().set('auth_provider', wrapped_func)
 
-    return wrapper
+    return wrapped_func

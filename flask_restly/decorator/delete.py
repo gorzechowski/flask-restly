@@ -1,17 +1,18 @@
 from flask_restly._storage import push_mapping
-from functools import wraps
+import wrapt
 
 
 def delete(path, serialize=None):
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
+        @wrapt.decorator
+        def wrapper(wrapped, _, args, kwargs):
+            result = wrapped(*args, **kwargs)
 
             return ('', 204) if result is None else (result, 200)
 
-        push_mapping(wrapper, path, serialize, 'DELETE')
+        wrapped_func = wrapper(func)
+        push_mapping(wrapped_func, path, serialize, 'DELETE')
 
-        return wrapper
+        return wrapped_func
 
     return decorator

@@ -1,17 +1,18 @@
 from flask_restly._storage import push_mapping
-from functools import wraps
+import wrapt
 
 
 def patch(path, serialize=None):
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            response = func(*args, **kwargs)
+        @wrapt.decorator
+        def wrapper(wrapped, _, args, kwargs):
+            response = wrapped(*args, **kwargs)
 
             return ('', 204) if response is None else (response, 200)
 
-        push_mapping(wrapper, path, serialize, 'PATCH')
+        wrapped_func = wrapper(func)
+        push_mapping(wrapped_func, path, serialize, 'PATCH')
 
-        return wrapper
+        return wrapped_func
 
     return decorator

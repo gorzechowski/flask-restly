@@ -1,12 +1,12 @@
 from flask_restly._storage import push_mapping
-from functools import wraps
+import wrapt
 
 
 def put(path, serialize=None):
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            response = func(*args, **kwargs)
+        @wrapt.decorator
+        def wrapper(wrapped, _, args, kwargs):
+            response = wrapped(*args, **kwargs)
             length = len(response)
 
             assert length <= 2, 'Too much return items in PUT method'
@@ -18,8 +18,9 @@ def put(path, serialize=None):
 
             return response[0], response[1]
 
-        push_mapping(wrapper, path, serialize, 'PUT')
+        wrapped_func = wrapper(func)
+        push_mapping(wrapped_func, path, serialize, 'PUT')
 
-        return wrapper
+        return wrapped_func
 
     return decorator

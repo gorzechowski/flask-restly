@@ -74,8 +74,8 @@ $ python main.py
 
 ## Todo
 
-* Identity support (authentication)
 * HATEOAS
+* Rate limits support
 * Caching helpers
 * ...and few more :)
 
@@ -83,8 +83,18 @@ $ python main.py
 
 Please see [examples](/examples) for more details.
 
-## Docs
+### Settings
 
+| Name                                                          | Default value                |
+| -----------------------------------------------------------:  | :--------------------------- |
+| RESTLY_SERIALIZER: `<flask_restly.serializer.SerializerBase>` | flask_restly.serializer.json |
+| RESTLY_API_PREFIX: `<str>`                                    | /api/rest                    |
+| RESTLY_PROTOBUF_MIMETYPE: `<str>`                             | application/x-protobuf       |
+
+### Docs
+
+* [Authentication](/docs/Authentication.md)
 * [Authorization](/docs/Authorization.md)
+* [Decorators](/docs/Decorators.md)
+* [Exceptions](/docs/Exceptions.md)
 * [Protobuf](/docs/Protobuf.md)
-* [Queued](/docs/Queued.md)
