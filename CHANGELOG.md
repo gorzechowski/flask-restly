@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 (UNRELEASED)
+* Limitation of max nested resources removed
+* Better url rule names used in `flask.request.url_rule.endpoint`
+
 ## 0.6.0 (10.12.2018)
 * Identity support (authentication)
 * Added few missing exceptions: NotAcceptable, NotImplemented, TooManyRequests, Unauthorized, UnprocessableEntity
