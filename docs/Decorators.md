@@ -1,5 +1,27 @@
 # Decorators
 
+List of decorators provided by `flask_restly`:
+
+1. auth.unauthorized
+1. auth.provider
+1. identity.provider
+1. resource
+1. get
+1. delete
+1. patch
+1. post
+1. put
+1. body
+1. queued
+
+```python
+from flask_restly.decorator import *
+```
+
+## Auth and Identity
+
+Decorators from auth and identity modules are described with examples in `Authentication` and `Authorization` docs 
+
 ## Queued
 
 In some cases You may need to do some job in the background. `@queued` decorator will change response code to 202 - Accepted. This informs API client that request job is done asynchronously.
