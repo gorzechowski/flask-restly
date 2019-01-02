@@ -139,36 +139,57 @@ def test_should_register_subresource():
         assert data['parent_id'] is 1
 
 
-def test_should_register_subresource_of_subresource():
+def test_should_register_nested_subresources():
     app = Flask(__name__)
     FlaskRestly(app)
 
-    @resource(name='grand')
-    class ParentParentResource:
+    @resource(name='resource')
+    class Resource:
         @get('/')
-        def get_grand(self):
+        def get(self):
             return dict()
 
-    @resource(name='parent', parent=ParentParentResource)
-    class ParentResource:
+    @resource(name='subresource1', parent=Resource)
+    class Subresource1:
         @get('/')
-        def get_parent(self, grand_id):
-            return dict(grand_id=int(grand_id))
+        def get(self, **kwargs):
+            pass
 
-    @resource(name='child', parent=ParentResource)
-    class ChildResource:
+    @resource(name='subresource2', parent=Subresource1)
+    class Subresource2:
         @get('/')
-        def get_child(self, grand_id, parent_id):
-            return dict(parent_id=int(parent_id), grand_id=int(grand_id))
+        def get(self, **kwargs):
+            pass
+
+    @resource(name='subresource3', parent=Subresource2)
+    class Subresource3:
+        @get('/')
+        def get(self, **kwargs):
+            pass
+
+    @resource(name='subresource4', parent=Subresource3)
+    class Subresource4:
+        @get('/')
+        def get(self, resource_id, subresource1_id, subresource2_id, subresource3_id):
+            return dict(
+                resource_id=int(resource_id),
+                subresource1_id=int(subresource1_id),
+                subresource2_id=int(subresource2_id),
+                subresource3_id=int(subresource3_id),
+            )
 
     with app.app_context():
-        ParentParentResource()
-        ChildResource()
-        ParentResource()
+        Resource()
+        Subresource1()
+        Subresource2()
+        Subresource3()
+        Subresource4()
 
     with app.test_client() as client:
-        response = client.get('/api/rest/v1/grand/1/parent/111/child')
+        response = client.get('/api/rest/v1/resource/1/subresource1/23/subresource2/45/subresource3/67/subresource4')
         assert response.status_code == 200
         data = response.get_json()
-        assert data['grand_id'] is 1
-        assert data['parent_id'] is 111
+        assert data['resource_id'] is 1
+        assert data['subresource1_id'] is 23
+        assert data['subresource2_id'] is 45
+        assert data['subresource3_id'] is 67

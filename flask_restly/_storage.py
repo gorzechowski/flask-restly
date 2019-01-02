@@ -55,7 +55,7 @@ def push_mapping(func, path, serialize, method):
             'func': func,
             'path': path,
             'serialize': serialize,
-            'methods': [method],
+            'method': method,
         }
     )
 

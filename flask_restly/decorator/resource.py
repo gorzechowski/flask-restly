@@ -4,31 +4,17 @@ from flask import (
 )
 from flask_restly._storage import get_blueprints_storage, get_metadata_storage
 from flask_restly._view import _view_factory
+from flask_restly._url_rule import _build_rule_name, _build_route
 from functools import wraps
 
 
-def _build_route(name, path, parent):
-    route = ''
-
-    if parent is not None:
-        if hasattr(parent, '_parent_name'):
-            route += parent._parent_name + '/<%s_id>/' % parent._parent_name
-
-        route += parent._resource_name + '/<%s_id>/' % parent._resource_name
-
-    route += name + path.rstrip('/')
-
-    return route
-
-
 def resource(name, parent=None, version=1):
-    assert name is not None, 'Resource name can not be empty'
+    assert type(name) is str, 'Resource name should be a string'
+    assert len(name) > 0, 'Resource name should contain at least one char'
 
     def decorator(obj):
         obj._resource_name = name
-
-        if parent is not None:
-            obj._parent_name = parent._resource_name
+        obj._parent = parent if parent is not None else None
 
         @wraps(obj)
         def wrapper(*args, **kwargs):
@@ -39,25 +25,23 @@ def resource(name, parent=None, version=1):
             api_prefix = current_app.config.get('RESTLY_API_PREFIX').strip('/')
 
             if version not in blueprints.keys():
-                bp = Blueprint(str(version), str(version), url_prefix='/%s/v%d/' % (api_prefix, version))
+                bp = Blueprint('v%d' % version, __name__, url_prefix='/%s/v%d/' % (api_prefix, version))
 
                 blueprints.set(version, bp)
 
             for key, value in metadata.get(obj.__name__, {}).items():
-                route = _build_route(name, value['path'], parent)
+                route = _build_route(obj, value['path'])
+                rule_name = _build_rule_name(obj, value['func'].__name__)
+                view = _view_factory(instance, obj, value['func'], value['serialize'])
 
                 blueprints.get(version).add_url_rule(
                     route,
-                    '%s:%s' % (obj.__name__, value['func'].__name__),
-                    _view_factory(instance, obj, value['func'], value['serialize']),
-                    methods=value['methods']
+                    rule_name,
+                    view,
+                    methods=[value['method']],
                 )
 
             current_app.register_blueprint(blueprints.get(version))
-
-            metadata.set(obj.__name__, {
-                obj.__name__: {},
-            })
 
             return instance
 
