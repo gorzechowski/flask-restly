@@ -7,7 +7,11 @@ def put(path, serialize=None):
         @wrapt.decorator
         def wrapper(wrapped, _, args, kwargs):
             response = wrapped(*args, **kwargs)
-            length = len(response)
+
+            if isinstance(response, dict):
+                length = 1
+            else:
+                length = len(response)
 
             assert length <= 2, 'Too much return items in PUT method'
 
