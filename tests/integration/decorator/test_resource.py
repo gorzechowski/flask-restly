@@ -136,7 +136,7 @@ def test_should_register_subresource():
         response = client.get('/api/rest/v1/parent/1/child')
         assert response.status_code == 200
         data = response.get_json()
-        assert data['parent_id'] is 1
+        assert data['parent_id'] == 1
 
 
 def test_should_register_nested_subresources():
@@ -189,7 +189,7 @@ def test_should_register_nested_subresources():
         response = client.get('/api/rest/v1/resource/1/subresource1/23/subresource2/45/subresource3/67/subresource4')
         assert response.status_code == 200
         data = response.get_json()
-        assert data['resource_id'] is 1
-        assert data['subresource1_id'] is 23
-        assert data['subresource2_id'] is 45
-        assert data['subresource3_id'] is 67
+        assert data['resource_id'] == 1
+        assert data['subresource1_id'] == 23
+        assert data['subresource2_id'] == 45
+        assert data['subresource3_id'] == 67
