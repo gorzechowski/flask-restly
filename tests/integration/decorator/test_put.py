@@ -21,7 +21,7 @@ def test_should_return_201_code_when_content_provided_and_code_not_provided():
         SomeResource()
 
     with app.test_client() as client:
-        response = client.put('/api/rest/v1/test/1', data=dict())
+        response = client.put('/api/rest/v1/test/1', json=dict())
         assert response.status_code == 201
         assert response.get_json() == {'id': 1, 'foo': 'foo', 'bar': 'bar'}
 
@@ -47,6 +47,6 @@ def test_should_return_custom_200_code_when_content_and_code_provided():
         SomeResource()
 
     with app.test_client() as client:
-        response = client.put('/api/rest/v1/test/1', data=dict())
+        response = client.put('/api/rest/v1/test/1', json=dict())
         assert response.status_code == 200
         assert response.get_json() == {'id': 1, 'foo': 'foo', 'bar': 'bar'}

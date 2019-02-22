@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.1 (22.02.2019)
+* Fix: Return BadRequest when request body not provided but required
+
 ## 0.7.0 (03.01.2019)
 * Limitation of max nested resources removed
 * Better url rule names used in `flask.request.url_rule.endpoint`
