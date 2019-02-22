@@ -1,7 +1,6 @@
 from flask_restly.decorator import resource, post
 from flask_restly import FlaskRestly
 from flask import Flask
-import json
 
 
 def test_should_return_204_code_when_content_is_not_provided():
@@ -18,7 +17,7 @@ def test_should_return_204_code_when_content_is_not_provided():
         SomeResource()
 
     with app.test_client() as client:
-        response = client.post('/api/rest/v1/test', data=json.dumps(dict()), content_type='application/json')
+        response = client.post('/api/rest/v1/test', json=dict())
         assert response.status_code == 204
         assert response.get_json() is None
 

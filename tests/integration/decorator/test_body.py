@@ -1,7 +1,6 @@
 from flask_restly.decorator import resource, post
 from flask_restly import FlaskRestly
 from flask import Flask
-import json
 
 
 def test_should_return_200_code_and_given_body_when_body_declared_and_provided():
@@ -20,7 +19,7 @@ def test_should_return_200_code_and_given_body_when_body_declared_and_provided()
     body = {'foo': 'bar'}
 
     with app.test_client() as client:
-        response = client.post('/api/rest/v1/test', data=json.dumps(body), content_type='application/json')
+        response = client.post('/api/rest/v1/test', json=body)
         assert response.status_code == 200
         assert response.get_json() == body
 
