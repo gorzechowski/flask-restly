@@ -4,7 +4,7 @@ from flask import (
     request,
 )
 from flask_restly._storage import get_metadata_storage
-from flask_restly.exception import Forbidden
+from flask_restly.exception import Forbidden, BadRequest
 
 
 def _view_factory(instance, obj, callback, serialize):
@@ -31,7 +31,10 @@ def _view_factory(instance, obj, callback, serialize):
         if inject_identity and identity_provider is not None:
             kwargs['identity'] = identity_provider()
 
-        if inject_body and len(request.get_data()) > 0:
+        if inject_body:
+            if len(request.get_data()) == 0:
+                raise BadRequest("Body is required for given request but was not provided")
+
             kwargs['body'] = deserialize(request, incoming)
 
         response, code = callback(instance, *args, **kwargs)
