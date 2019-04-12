@@ -6,7 +6,7 @@ from ._storage import get_blueprints_storage, get_metadata_storage
 from ._rate import inject_rate_limit_headers
 
 
-__version__ = '0.7.1'
+__version__ = '1.0.0'
 
 
 def _jsonify_error(error):
