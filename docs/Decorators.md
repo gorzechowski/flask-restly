@@ -2,17 +2,20 @@
 
 List of decorators provided by `flask_restly`:
 
-1. auth.unauthorized
 1. auth.provider
-1. identity.provider
-1. resource
-1. get
+1. auth.unauthorized
+1. body
 1. delete
+1. get
+1. identity.provider
 1. patch
 1. post
 1. put
-1. body
 1. queued
+1. rate.key_resolver
+1. rate.limit
+1. rate.resolver
+1. resource
 
 ```python
 from flask_restly.decorator import *
@@ -21,6 +24,10 @@ from flask_restly.decorator import *
 ## Auth and Identity
 
 Decorators from auth and identity modules are described with examples in `Authentication` and `Authorization` docs 
+
+## Rate
+
+Decorators from rate module are described with examples in `RateLimits` docs
 
 ## Queued
 

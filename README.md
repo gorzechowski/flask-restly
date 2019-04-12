@@ -71,13 +71,11 @@ $ python main.py
 * Authorization and authentication decorators
 * Automatic REST-like response codes
 * API versioning
+* Rating limits
 
 ## Todo
 
-* HATEOAS
-* Rate limits support
-* Caching helpers
-* ...and few more :)
+* HATEOAS/HAL
 
 ## Usage
 
@@ -90,6 +88,8 @@ Please see [examples](/examples) for more details.
 | RESTLY_SERIALIZER: `<flask_restly.serializer.SerializerBase>` | flask_restly.serializer.json |
 | RESTLY_API_PREFIX: `<str>`                                    | /api/rest                    |
 | RESTLY_PROTOBUF_MIMETYPE: `<str>`                             | application/x-protobuf       |
+| RESTLY_RATE_LIMIT_REQUESTS_AMOUNT: `<int>`                    | 100                          |
+| RESTLY_RATE_LIMIT_WINDOW_SECONDS: `<int>`                     | 60                           |
 
 ### Docs
 
@@ -98,3 +98,4 @@ Please see [examples](/examples) for more details.
 * [Decorators](/docs/Decorators.md)
 * [Exceptions](/docs/Exceptions.md)
 * [Protobuf](/docs/Protobuf.md)
+* [RateLimits](/docs/RateLimits.md)
