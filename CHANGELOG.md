@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0 (12.04.2019)
+* Rating limit decorators
+
 ## 0.7.1 (22.02.2019)
 * Fix: Return BadRequest when request body not provided but required
 
