@@ -3,9 +3,10 @@ from werkzeug.exceptions import HTTPException
 from flask_restly.exception import InternalServerError
 from flask_restly.serializer import json
 from ._storage import get_blueprints_storage, get_metadata_storage
+from ._rate import inject_rate_limit_headers
 
 
-__version__ = '0.7.1'
+__version__ = '1.0.0'
 
 
 def _jsonify_error(error):
@@ -56,11 +57,15 @@ class FlaskRestly(object):
         app.config.setdefault('RESTLY_SERIALIZER', json)
         app.config.setdefault('RESTLY_API_PREFIX', '/api/rest')
         app.config.setdefault('RESTLY_PROTOBUF_MIMETYPE', 'application/x-protobuf')
+        app.config.setdefault('RESTLY_RATE_LIMIT_REQUESTS_AMOUNT', 100)
+        app.config.setdefault('RESTLY_RATE_LIMIT_WINDOW_SECONDS', 60)
 
         if self._error_handler is not None:
             app.register_error_handler(Exception, self._error_handler)
         else:
             app.register_error_handler(Exception, api_error_handler)
+
+        app.after_request(inject_rate_limit_headers)
 
         self._app = app
 
