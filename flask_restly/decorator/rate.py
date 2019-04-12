@@ -39,3 +39,14 @@ def resolver(func):
     get_metadata_storage().set('rate_limit_resolver', wrapped_func)
 
     return wrapped_func
+
+
+def key_resolver(func):
+    @wrapt.decorator
+    def wrapper(wrapped, _, args, kwargs):
+        return wrapped(*args, **kwargs)
+
+    wrapped_func = wrapper(func)
+    get_metadata_storage().set('rate_limit_key_resolver', wrapped_func)
+
+    return wrapped_func
