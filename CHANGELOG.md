@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1 (19.04.2019)
+* Fix: protobuf's map causes error, #16
+
 ## 1.0.0 (12.04.2019)
 * Rating limit decorators
 
