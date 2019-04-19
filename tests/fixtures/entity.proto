@@ -2,4 +2,6 @@ syntax = "proto3";
 
 message Entity {
     int32 id = 1;
+    repeated string roles = 2;
+    map<int32, string> metadata = 3;
 }

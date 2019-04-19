@@ -61,13 +61,20 @@ def _dict_to_protobuf(value, message):
             message.extend(values)
 
     def _parse_dict(values, message):
-        for k, v in values.items():
-            if isinstance(v, dict):
-                _parse_dict(v, getattr(message, k))
-            elif isinstance(v, list):
-                _parse_list(v, getattr(message, k))
+        for key, value in values.items():
+            if isinstance(value, dict):
+                _parse_dict(value, getattr(message, key))
+            elif isinstance(value, list):
+                _parse_list(value, getattr(message, key))
+            elif hasattr(message, str(key)):
+                setattr(message, key, value)
+            elif hasattr(message, '__setitem__'):
+                message[key] = value
             else:
-                setattr(message, k, v)
+                raise Exception(
+                    'Not supported protobuf type.' +
+                    'Tried to assign %s=%s: %s' % (key, value, message)
+                )
 
         return message
 
