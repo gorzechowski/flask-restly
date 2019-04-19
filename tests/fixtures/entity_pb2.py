@@ -19,11 +19,48 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0c\x65ntity.proto\"\x14\n\x06\x45ntity\x12\n\n\x02id\x18\x01 \x01(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\x0c\x65ntity.proto\"}\n\x06\x45ntity\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05roles\x18\x02 \x03(\t\x12\'\n\x08metadata\x18\x03 \x03(\x0b\x32\x15.Entity.MetadataEntry\x1a/\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x62\x06proto3')
 )
 
 
 
+
+_ENTITY_METADATAENTRY = _descriptor.Descriptor(
+  name='MetadataEntry',
+  full_name='Entity.MetadataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='Entity.MetadataEntry.key', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='Entity.MetadataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=94,
+  serialized_end=141,
+)
 
 _ENTITY = _descriptor.Descriptor(
   name='Entity',
@@ -39,10 +76,24 @@ _ENTITY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='roles', full_name='Entity.roles', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='Entity.metadata', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_ENTITY_METADATAENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -52,18 +103,29 @@ _ENTITY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=16,
-  serialized_end=36,
+  serialized_end=141,
 )
 
+_ENTITY_METADATAENTRY.containing_type = _ENTITY
+_ENTITY.fields_by_name['metadata'].message_type = _ENTITY_METADATAENTRY
 DESCRIPTOR.message_types_by_name['Entity'] = _ENTITY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Entity = _reflection.GeneratedProtocolMessageType('Entity', (_message.Message,), dict(
+
+  MetadataEntry = _reflection.GeneratedProtocolMessageType('MetadataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _ENTITY_METADATAENTRY,
+    __module__ = 'entity_pb2'
+    # @@protoc_insertion_point(class_scope:Entity.MetadataEntry)
+    ))
+  ,
   DESCRIPTOR = _ENTITY,
   __module__ = 'entity_pb2'
   # @@protoc_insertion_point(class_scope:Entity)
   ))
 _sym_db.RegisterMessage(Entity)
+_sym_db.RegisterMessage(Entity.MetadataEntry)
 
 
+_ENTITY_METADATAENTRY._options = None
 # @@protoc_insertion_point(module_scope)

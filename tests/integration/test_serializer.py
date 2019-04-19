@@ -34,6 +34,11 @@ def test_should_serialize_given_response_to_json(data, expected_data):
 @pytest.mark.parametrize("data,expected_data", [
     (dict(), bytes('', 'utf8')),
     (dict(id=1), bytes('\x08\x01', 'utf8')),
+    (dict(id=1, roles=['role1', 'role2']), bytes('\x08\x01\x12\x05role1\x12\x05role2', 'utf8')),
+    (
+        dict(id=1, metadata={2: 'cba', 1: 'abc'}),
+        bytes('\x08\x01\x1a\x07\x08\x01\x12\x03abc\x1a\x07\x08\x02\x12\x03cba', 'utf8')
+    ),
 ])
 def test_should_serialize_given_response_to_protobuf(data, expected_data):
     app = Flask(__name__)
