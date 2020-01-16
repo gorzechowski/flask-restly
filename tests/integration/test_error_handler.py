@@ -49,7 +49,7 @@ def test_should_return_json_when_http_error_raised(error, expected_error_code, e
         assert data['error'] == expected_message
 
 
-def test_should_return_original_error_when_not_api_resource():
+def test_should_not_raise_api_error_when_requested_not_api_resource():
     app = Flask(__name__)
     FlaskRestly(app)
 
@@ -61,7 +61,7 @@ def test_should_return_original_error_when_not_api_resource():
         try:
             client.get('/some/url')
         except Exception as e:
-            assert str(e) == 'Some error'
+            assert not isinstance(e, InternalServerError)
 
 
 def test_should_use_custom_error_handler():
