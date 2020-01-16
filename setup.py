@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='flask-restly',
-    version='1.0.1',
+    version='1.1.0',
     description='Build a REST API with Flask',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -26,6 +26,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Application Frameworks',

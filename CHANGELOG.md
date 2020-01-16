@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0 (16.01.2020)
+* Added Python 3.7 support
+
 ## 1.0.1 (19.04.2019)
 * Fix: protobuf's map causes error, #16
 
